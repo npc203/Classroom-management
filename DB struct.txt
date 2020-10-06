@@ -1,0 +1,16 @@
+{
+    name#teacher:{
+        password:
+        role:
+    }
+
+    name#student:{
+        password:
+        role:
+        class:
+        section:
+        roll_no:
+        exam:
+        marks:{}
+    }
+}
