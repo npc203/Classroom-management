@@ -18,12 +18,13 @@ while True:
             if data["role"] == 'T': #Logged as teacher
                 print(f"Sucessfully Logged in as Teacher\n")
                 while True:
-                    print(" 1 View All student Details\n") 
+                    print(" 1 Export All student Details\n") 
                     print(" 2 View Failures\n")
                     print(" 3 Get class average\n")
                     print(" 4 View my details\n")
                     print(" 5 Enter marks for student\n")
-                    print(" 6 Exit")
+                    print(" 6 Generate Report\n")
+                    print(" 7 Exit")
 
                     choice = int(input("->"))
                     with open("./users.json",'r') as f:
@@ -41,7 +42,7 @@ while True:
                         for i in all_data:
                             print(i)
                             if all_data[i]["role"]=='S':
-                                i=all_data[i] #lazy to refactor
+                                i=all_data[i] #lazy to refactor pls do it maybe
                                 sheet1.write(count,0,i["name"])
                                 sheet1.write(count,1,i["marks"]["mat"])
                                 sheet1.write(count,2,i["marks"]["phy"])
@@ -52,7 +53,7 @@ while True:
                         wb.save("Student MarkSheet - "+str(time.time()).split(".")[0]+".xls")
                         print("Sucessfully extracted into an Excel File\n")
                     elif choice == 2:
-                        count=1
+                        count=0
                         for user in all_data:
                             if all_data[user]["role"]=='S':
                                user = all_data[user] #lazy to refactor
@@ -92,13 +93,28 @@ while True:
                                 json.dump(all_data,f)
                             print("Successfully Updated student's mark")
                         else:
-                            print("Invalid Student Name!")
+                            print("Student Not Found!")
+
+                    elif choice == 6:
+                        name = input("Enter the name of the student:")
+                        if name in all_data:
+                            stud=all_data[name]
+                            print("-----------------------------------\n")
+                            print(f"{name}'s Marks in {stud['exam']}:\n")
+                            print("Mathematics:",stud["marks"]["mat"])
+                            print("Physics    :",stud["marks"]["phy"])
+                            print("Chemistry  :",stud["marks"]["chem"])
+                            print("English    :",stud["marks"]["eng"])
+                            print("Comp Sci   :",stud["marks"]["comp"])
+                            print("-----------------------------------\n")
+                        else:
+                            print("Student Not Found!")
                     
                     else:
                         exit()
                     
                     input("Press enter to try again")
- 
+                    print("-----------------------------------\n")
             elif data["role"] == 'S': #Logged as Student
                 print(f"Sucessfully Logged in as Student\n")
                 while True:
@@ -116,12 +132,14 @@ while True:
                         print("-----------------------------------\n")
                     elif choice == 2:
                         if len(data["marks"])>0:
+                            print("-----------------------------------\n")
                             print(f"My Marks in {data['exam']}:\n")
-                            print("Mathematics:",data["mat"])
-                            print("Physics    :",data["phy"])
-                            print("Chemistry  :",data["chem"])
-                            print("English    :",data["eng"])
-                            print("Comp Sci   :",data["comp"])
+                            print("Mathematics:",data["marks"]["mat"])
+                            print("Physics    :",data["marks"]["phy"])
+                            print("Chemistry  :",data["marks"]["chem"])
+                            print("English    :",data["marks"]["eng"])
+                            print("Comp Sci   :",data["marks"]["comp"])
+                            print("-----------------------------------\n")
                         else:
                             print("Teacher hasn't updated your marks\n")
                     elif choice == 3:
