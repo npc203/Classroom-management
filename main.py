@@ -49,7 +49,7 @@ while True:
                                 sheet1.write(count,3,i["marks"]["chem"])
                                 sheet1.write(count,4,i["marks"]["comp"])
                                 sheet1.write(count,5,i["marks"]["eng"])
-                                
+                                count+=1
                         wb.save("Student MarkSheet - "+str(time.time()).split(".")[0]+".xls")
                         print("Sucessfully extracted into an Excel File\n")
                     elif choice == 2:
@@ -59,7 +59,7 @@ while True:
                                user = all_data[user] #lazy to refactor
                                for sub in user["marks"]:
                                    if int(user["marks"][sub])<40:
-                                       print("Name:",i["name"])
+                                       print("Name:",user["name"])
                                        count+=1
                                        break
                         print("Total number of failures:",count)
@@ -68,7 +68,7 @@ while True:
                         result = 0 
                         for user in all_data:
                             if all_data[user]["role"] == 'S':
-                                result += sum(map(int,all_data[user]["marks"].values))/5
+                                result += sum(map(int,all_data[user]["marks"].values()))/5
                                 count+=1
                         print("\nTotal number of students:",count)
                         print("Class average percentage: {:.2f}%".format(result/count))
